@@ -31,6 +31,6 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
-      marginVertical: 10
+      marginBottom: 10
     }
 });

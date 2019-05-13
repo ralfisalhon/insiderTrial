@@ -25,6 +25,7 @@ export class Table extends React.Component {
       data: [
         {
           name: "AMAZING team",
+          points: 0,
           played: 0,
           won: 0,
           draw: 0,
@@ -33,6 +34,7 @@ export class Table extends React.Component {
         },
         {
           name: "GREAT players",
+          points: 0,
           played: 0,
           won: 0,
           draw: 0,
@@ -41,6 +43,7 @@ export class Table extends React.Component {
         },
         {
           name: "GOOD club",
+          points: 0,
           played: 0,
           won: 0,
           draw: 0,
@@ -49,6 +52,7 @@ export class Table extends React.Component {
         },
         {
           name: "OKAY kids",
+          points: 0,
           played: 0,
           won: 0,
           draw: 0,
@@ -57,6 +61,7 @@ export class Table extends React.Component {
         }
       ],
       clubs: null,
+      points: null,
       played: null,
       won: null,
       draw: null,
@@ -75,6 +80,7 @@ export class Table extends React.Component {
   setIndividualArrays() {
     this.setState({
       clubs: null,
+      points: null,
       played: null,
       won: null,
       draw: null,
@@ -84,6 +90,7 @@ export class Table extends React.Component {
 
     let clubs = [],
       played = [],
+      points = [],
       won = [],
       draw = [],
       lost = [],
@@ -91,6 +98,7 @@ export class Table extends React.Component {
 
     for (let i = 0; i < this.state.data.length; i++) {
       clubs.push(this.state.data[i].name);
+      points.push(this.state.data[i].points);
       played.push(this.state.data[i].played);
       won.push(this.state.data[i].won);
       draw.push(this.state.data[i].draw);
@@ -98,7 +106,7 @@ export class Table extends React.Component {
       strengths.push(this.state.data[i].strengths);
     }
 
-    this.setState({ clubs, played, won, draw, lost, strengths });
+    this.setState({ clubs, points, played, won, draw, lost, strengths });
   }
 
   nextWeek() {
@@ -128,16 +136,20 @@ export class Table extends React.Component {
       currResults.push(this.state.data[teamIndexes[0]].name + " " + winnerScore + " - " + loserScore + " " + this.state.data[teamIndexes[1]].name);
       this.state.data[teamIndexes[0]].draw++;
       this.state.data[teamIndexes[1]].draw++;
+      this.state.data[teamIndexes[0]].points++;
+      this.state.data[teamIndexes[1]].points++;
     } else if (randomNum <= this.state.data[teamIndexes[0]].strength) {
       console.log("First team wins", this.state.data[teamIndexes[0]].name);
       currResults.push(this.state.data[teamIndexes[0]].name + " " + winnerScore + " - " + loserScore + " " + this.state.data[teamIndexes[1]].name);
       this.state.data[teamIndexes[0]].won++;
       this.state.data[teamIndexes[1]].lost++;
+      this.state.data[teamIndexes[0]].points += 3;
     } else {
       console.log("Second team wins", this.state.data[teamIndexes[1]].name);
       currResults.push(this.state.data[teamIndexes[1]].name + " " + winnerScore + " - " + loserScore + " " + this.state.data[teamIndexes[0]].name);
       this.state.data[teamIndexes[1]].won++;
       this.state.data[teamIndexes[0]].lost++;
+      this.state.data[teamIndexes[1]].points += 3;
     }
 
     this.setState({results: currResults, refresh: !this.state.refresh});
@@ -146,9 +158,8 @@ export class Table extends React.Component {
   }
 
   playAll() {
-    this.nextWeek();
-
     if (this.state.totalPlays < (this.state.data.length-1) * 4) {
+      this.nextWeek();
       let that = this;
       setTimeout(function() {
         that.playAll();
@@ -185,14 +196,16 @@ export class Table extends React.Component {
     return (
       <View>
         {this.state.clubs &&
+        this.state.points &&
         this.state.played &&
         this.state.won &&
         this.state.draw &&
         this.state.lost &&
         this.state.strengths ? (
-          <View style={{ height: windowHeight-180 }}>
+          <View style={{ height: 200 }}>
             <View style={styles.table}>
-              <Column name={"Position"} width={75} data={[1, 2, 3, 4]} />
+              <Column name={"Position"} width={65} data={[1, 2, 3, 4]} />
+              <Column name={"PTS"} width={40} data={this.state.points} />
               <Column name={"Club"} width={125} data={this.state.clubs} />
               <Column
                 name={"P"}
@@ -222,7 +235,7 @@ export class Table extends React.Component {
                 name={"Match Results"}
                 data={this.state.results}
                 refresh={this.state.refresh}
-                width={300}
+                width={250}
               />
             </View>
 
