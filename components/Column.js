@@ -1,27 +1,10 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Dimensions,
-  Animated,
-  Image,
-  Text,
-  Platform,
-  TouchableOpacity,
-  Alert,
-  FlatList
-} from "react-native";
-const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+import { StyleSheet, View, Text, FlatList } from "react-native";
 import { material } from "react-native-typography";
 
 export class Column extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      data: []
-    };
   }
 
   renderItem = ({ item, index }) => {
@@ -65,6 +48,6 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     borderColor: "lightgray",
     padding: 5,
-    overflow: 'hidden',
+    overflow: "hidden"
   }
 });

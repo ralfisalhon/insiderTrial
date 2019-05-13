@@ -1,18 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Dimensions,
-  Animated,
-  Image,
-  Text,
-  Platform,
-  TouchableOpacity,
-  Alert,
-  FlatList
-} from "react-native";
-const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { material } from "react-native-typography";
 
 export class Button extends React.Component {
