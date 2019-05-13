@@ -23,5 +23,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#2c2c2c',
         alignItems: 'center',
+        padding: 20,
     },
 });
