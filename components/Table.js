@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { material } from "react-native-typography";
-import FadeInView from "react-native-fade-in-view";
 let { Column } = require("./Column.js");
 let { Button } = require("./Button.js");
 
@@ -365,7 +364,7 @@ export class Table extends React.Component {
 
   render() {
     return (
-      <FadeInView>
+      <View>
         {this.state.clubs &&
         this.state.points &&
         this.state.played &&
@@ -426,7 +425,7 @@ export class Table extends React.Component {
         ) : (
           <Text style={material.captionWhite}>Loading Data...</Text>
         )}
-      </FadeInView>
+      </View>
     );
   }
 }
