@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text, FlatList } from "react-native";
 import { material } from "react-native-typography";
+import FadeInView from 'react-native-fade-in-view';
 
 export class Column extends React.Component {
   constructor(props) {

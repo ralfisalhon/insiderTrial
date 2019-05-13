@@ -9,6 +9,7 @@
   "dependencies": {
     "react": "16.8.3",
     "react-native": "0.59.8",
+    "react-native-fade-in-view": "^1.0.5",
     "react-native-typography": "^1.4.0"
   },
   "devDependencies": {

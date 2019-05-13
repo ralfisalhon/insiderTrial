@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { material } from "react-native-typography";
+import FadeInView from "react-native-fade-in-view";
 let { Column } = require("./Column.js");
 let { Button } = require("./Button.js");
 
@@ -71,17 +72,17 @@ export class Table extends React.Component {
 
   reorderTeams(pointsArray, differenceArray) {
     let oldPointsArray = [];
-    for (var i = 0; i < this.state.data.length; i++) {
+    for (let i = 0; i < this.state.data.length; i++) {
       oldPointsArray.push(pointsArray[i]);
     }
 
     let newArray = [];
     let oldArray = [];
-    for (var i = 0; i < this.state.data.length; i++) {
+    for (let i = 0; i < this.state.data.length; i++) {
       oldArray.push(this.state.data[i]);
     }
 
-    for (var z = 0; z < 4; z++) {
+    for (let z = 0; z < 4; z++) {
       let largest = Math.max.apply(0, oldPointsArray);
       console.log("LARGEST NUM IS", largest);
 
@@ -103,7 +104,7 @@ export class Table extends React.Component {
       let pointsArray = [],
         differenceArray = [];
 
-      for (var i = 0; i < this.state.data.length; i++) {
+      for (let i = 0; i < this.state.data.length; i++) {
         pointsArray.push(this.state.data[i].points);
         differenceArray.push(this.state.data[i].goaldifference);
       }
@@ -273,7 +274,7 @@ export class Table extends React.Component {
       let that = this;
       setTimeout(function() {
         that.playAll();
-      }, 100);
+      }, 200);
     }
   }
 
@@ -341,7 +342,7 @@ export class Table extends React.Component {
   findTeamIndexes(playCounts) {
     let minIndex1 = Math.floor(Math.random() * Math.floor(playCounts.length));
     let min = playCounts[minIndex1];
-    for (var i = 0; i < playCounts.length; i++) {
+    for (let i = 0; i < playCounts.length; i++) {
       if (playCounts[i] < min) {
         minIndex1 = i;
       }
@@ -353,7 +354,7 @@ export class Table extends React.Component {
     }
     let min2 = playCounts[minIndex2];
 
-    for (var i = 0; i < playCounts.length; i++) {
+    for (let i = 0; i < playCounts.length; i++) {
       if (i != minIndex1 && playCounts[i] < min2) {
         minIndex2 = i;
       }
@@ -364,7 +365,7 @@ export class Table extends React.Component {
 
   render() {
     return (
-      <View>
+      <FadeInView>
         {this.state.clubs &&
         this.state.points &&
         this.state.played &&
@@ -419,13 +420,13 @@ export class Table extends React.Component {
             <View style={styles.buttons}>
               <Button name={"Reset All"} onPress={() => this.resetAll()} />
               <Button name={"Play All"} onPress={() => this.playAll()} />
-              <Button name={"Next Week"} onPress={() => this.nextWeek()} />
+              <Button name={"Next Match"} onPress={() => this.nextWeek()} />
             </View>
           </View>
         ) : (
-          <Text style={material.titleWhite}>Loading Data...</Text>
+          <Text style={material.captionWhite}>Loading Data...</Text>
         )}
-      </View>
+      </FadeInView>
     );
   }
 }
