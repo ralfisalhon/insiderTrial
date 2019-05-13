@@ -46,9 +46,9 @@ export class Column extends React.Component {
         <View style={{ borderBottomWidth: 1, borderColor: "white" }}>
           <Text style={material.body1White}>{this.props.name}</Text>
         </View>
-        <View style={{ marginTop: 5 }}>
+        <View style={{ marginTop: 5, marginBottom: 25 }}>
           <FlatList
-            extraData={this.state.refresh}
+            extraData={this.props.refresh}
             showsVerticalScrollIndicator={false}
             data={this.props.data}
             renderItem={this.renderItem}
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   column: {
     borderRightWidth: 1,
     borderColor: "lightgray",
-    padding: 5
+    padding: 5,
+    overflow: 'hidden',
   }
 });

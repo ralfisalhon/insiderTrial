@@ -24,7 +24,7 @@ export class Table extends React.Component {
     this.state = {
       data: [
         {
-          name: "Amazing Team",
+          name: "AMAZING team",
           played: 0,
           won: 0,
           draw: 0,
@@ -32,7 +32,7 @@ export class Table extends React.Component {
           strength: 10
         },
         {
-          name: "Great Team",
+          name: "GREAT players",
           played: 0,
           won: 0,
           draw: 0,
@@ -40,7 +40,7 @@ export class Table extends React.Component {
           strength: 8
         },
         {
-          name: "Good Team",
+          name: "GOOD club",
           played: 0,
           won: 0,
           draw: 0,
@@ -48,7 +48,7 @@ export class Table extends React.Component {
           strength: 6
         },
         {
-          name: "Okay Team",
+          name: "OKAY kids",
           played: 0,
           won: 0,
           draw: 0,
@@ -61,7 +61,10 @@ export class Table extends React.Component {
       won: null,
       draw: null,
       lost: null,
-      strengths: null
+      strengths: null,
+      results: [],
+      refresh: false,
+      totalPlays: 0,
     };
   }
 
@@ -99,12 +102,58 @@ export class Table extends React.Component {
   }
 
   nextWeek() {
+    this.setState({totalPlays: this.state.totalPlays + 1});
+
     let teamIndexes = this.findTeamIndexes(this.state.played);
 
     // Alert.alert(teamIndexes[0].toString(), teamIndexes[1].toString());
 
     console.log("INDEXES", teamIndexes[0], teamIndexes[1]);
     console.log("STRENGTHS", this.state.data[teamIndexes[0]].strength, this.state.data[teamIndexes[1]].strength);
+
+    this.state.data[teamIndexes[0]].played++;
+    this.state.data[teamIndexes[1]].played++;
+
+    let currResults = this.state.results;
+
+    let randomNum = Math.floor(Math.random() * Math.floor(this.state.data[teamIndexes[0]].strength + this.state.data[teamIndexes[1]].strength));
+
+    console.log("RANDOM NUM", randomNum);
+
+    let loserScore = Math.floor(Math.random() * Math.floor(3));
+    let winnerScore = loserScore + Math.floor(Math.random() * Math.floor(2)) + + Math.floor(Math.random() * Math.floor(2));
+
+    if (loserScore == winnerScore) {
+      console.log("DRAW", this.state.data[teamIndexes[0]].name);
+      currResults.push(this.state.data[teamIndexes[0]].name + " " + winnerScore + " - " + loserScore + " " + this.state.data[teamIndexes[1]].name);
+      this.state.data[teamIndexes[0]].draw++;
+      this.state.data[teamIndexes[1]].draw++;
+    } else if (randomNum <= this.state.data[teamIndexes[0]].strength) {
+      console.log("First team wins", this.state.data[teamIndexes[0]].name);
+      currResults.push(this.state.data[teamIndexes[0]].name + " " + winnerScore + " - " + loserScore + " " + this.state.data[teamIndexes[1]].name);
+      this.state.data[teamIndexes[0]].won++;
+      this.state.data[teamIndexes[1]].lost++;
+    } else {
+      console.log("Second team wins", this.state.data[teamIndexes[1]].name);
+      currResults.push(this.state.data[teamIndexes[1]].name + " " + winnerScore + " - " + loserScore + " " + this.state.data[teamIndexes[0]].name);
+      this.state.data[teamIndexes[1]].won++;
+      this.state.data[teamIndexes[0]].lost++;
+    }
+
+    this.setState({results: currResults, refresh: !this.state.refresh});
+
+    this.setIndividualArrays();
+  }
+
+  playAll() {
+    this.nextWeek();
+
+    if (this.state.totalPlays < (this.state.data.length-1) * 4) {
+      let that = this;
+      setTimeout(function() {
+        that.playAll();
+      }, 250);
+    }
   }
 
   findTeamIndexes(playCounts) {
@@ -141,7 +190,7 @@ export class Table extends React.Component {
         this.state.draw &&
         this.state.lost &&
         this.state.strengths ? (
-          <View style={{ height: 20 + this.state.data.length * 20 }}>
+          <View style={{ height: windowHeight-180 }}>
             <View style={styles.table}>
               <Column name={"Position"} width={75} data={[1, 2, 3, 4]} />
               <Column name={"Club"} width={125} data={this.state.clubs} />
@@ -172,14 +221,15 @@ export class Table extends React.Component {
               <Column
                 name={"Match Results"}
                 data={this.state.results}
-                width={250}
+                refresh={this.state.refresh}
+                width={300}
               />
             </View>
 
             <View style={styles.buttons}>
               <Button
                 name={"Play All"}
-                onPress={() => Alert.alert("Play All")}
+                onPress={() => this.playAll()}
               />
               <Button
                 name={"Next Week"}
