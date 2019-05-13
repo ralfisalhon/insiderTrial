@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, TouchableWithoutFeedback, Dimensions, Animated, Image, Text, Platform, TouchableOpacity, Alert, FlatList } from "react-native";
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 import { material } from 'react-native-typography'
+let { Column } = require("./Column.js");
 
 export class Table extends React.Component {
     constructor(props) {
@@ -14,11 +15,16 @@ export class Table extends React.Component {
 
     render() {
         return (
-            <View style = {styles.table}>
-              <View style= {styles.column}/>
-              <View style= {styles.column}/>
-              <View style= {styles.column}/>
-              <View style= {styles.column}/>
+              <View>
+              <View style = {styles.table}>
+                <Column name={"Position"} width={100}/>
+                <Column name={"Club"} width={100}/>
+                <Column name={"P"} width={30} centered={true}/>
+                <Column name={"W"} width={30} centered={true}/>
+                <Column name={"D"} width={30} centered={true}/>
+                <Column name={"L"} width={30} centered={true}/>
+                <Column name={"Match Results"} width={windowWidth-360} />
+              </View>
             </View>
         );
     }
@@ -26,17 +32,12 @@ export class Table extends React.Component {
 
 const styles = StyleSheet.create({
     table: {
-        borderWidth: 1,
-        borderColor: 'white',
-        height: windowHeight/2,
+        borderColor: 'lightgray',
+        height: windowHeight-100,
         flexDirection: 'row',
-        justifyContent: 'space-between',
         margin: 20,
-        borderRadius: 5,
+        borderWidth: 1,
+        width: windowWidth - 40,
+        borderRightWidth: 0,
     },
-    column: {
-      backgroundColor: 'red',
-      flex: 1,
-      borderWidth: 1,
-    }
 });
