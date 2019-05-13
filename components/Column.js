@@ -13,10 +13,12 @@ export class Column extends React.Component {
     }
 
     renderItem = ({ item, index }) => {
-      return(
-        <View style = {{height: 20, width: this.props.width-12, borderWidth: 1}}>
-        </View>
-      );
+
+        return(
+          <View style = {{height: 20, width: this.props.width-12}}>
+            <Text style = {material.body1White}>{this.props.data[index]}</Text>
+          </View>
+        );
 
     };
 
@@ -30,7 +32,7 @@ export class Column extends React.Component {
                 <FlatList
                 extraData={this.state.refresh}
                 showsVerticalScrollIndicator={false}
-                data={[1, 2, 3]}
+                data={this.props.data}
                 renderItem={this.renderItem}
                 keyExtractor={(item, index) => index.toString()}
                 />
