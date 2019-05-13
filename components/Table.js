@@ -11,7 +11,7 @@ export class Table extends React.Component {
     this.state = {
       data: [
         {
-          name: "AMAZING (25)",
+          name: "Manchester (25)",
           points: 0,
           played: 0,
           won: 0,
@@ -21,7 +21,7 @@ export class Table extends React.Component {
           strength: 25
         },
         {
-          name: "GREAT (20)",
+          name: "Liverpool (20)",
           points: 0,
           played: 0,
           won: 0,
@@ -31,7 +31,7 @@ export class Table extends React.Component {
           strength: 20
         },
         {
-          name: "GOOD (15)",
+          name: "Chelsea (15)",
           points: 0,
           played: 0,
           won: 0,
@@ -41,7 +41,7 @@ export class Table extends React.Component {
           strength: 15
         },
         {
-          name: "OKAY (10)",
+          name: "Tottenham (10)",
           points: 0,
           played: 0,
           won: 0,
@@ -190,7 +190,19 @@ export class Table extends React.Component {
 
     let loserScore = Math.floor(Math.random() * Math.floor(3));
     let winnerScore = loserScore;
-    if (!(Math.floor(Math.random() * Math.floor(3)) == 0)) {
+    if (
+      !(
+        Math.floor(
+          Math.random() *
+            Math.floor(
+              Math.abs(
+                this.state.data[teamIndexes[0]].strength -
+                  this.state.data[teamIndexes[1]].strength
+              ) * 2
+            )
+        ) == 0
+      )
+    ) {
       winnerScore += 1 + Math.floor(Math.random() * Math.floor(2));
     } else {
     }
@@ -270,7 +282,7 @@ export class Table extends React.Component {
       {
         data: [
           {
-            name: "AMAZING (25)",
+            name: "Manchester (25)",
             points: 0,
             played: 0,
             won: 0,
@@ -280,7 +292,7 @@ export class Table extends React.Component {
             strength: 10
           },
           {
-            name: "GREAT (20)",
+            name: "Liverpool (20)",
             points: 0,
             played: 0,
             won: 0,
@@ -290,7 +302,7 @@ export class Table extends React.Component {
             strength: 8
           },
           {
-            name: "GOOD (15)",
+            name: "Chelsea (15)",
             points: 0,
             played: 0,
             won: 0,
@@ -300,7 +312,7 @@ export class Table extends React.Component {
             strength: 6
           },
           {
-            name: "OKAY (10)",
+            name: "Tottenham (10)",
             points: 0,
             played: 0,
             won: 0,
