@@ -10,15 +10,35 @@ export class Table extends React.Component {
         super(props);
 
         this.state = {
-            teams: [
-              {}
+            data: [
+              {
+                name: "Manchester City",
+                played: 38,
+                won: 32,
+                drawn: 2,
+                lost: 4,
+              },
+              {
+                name: "Liverpool",
+                played: 38,
+                won: 30,
+                drawn: 7,
+                lost: 1,
+              },
+              {
+                name: "Chelsea",
+                played: 38,
+                won: 21,
+                drawn: 9,
+                lost: 8,
+              },
             ],
         };
     }
 
     render() {
         return (
-            <View>
+            <View style = {{height: 20 + this.state.data.length * 25}}>
               <View style = {styles.table}>
                 <Column name={"Position"} width={100}/>
                 <Column name={"Club"} width={100}/>
@@ -41,10 +61,8 @@ export class Table extends React.Component {
 const styles = StyleSheet.create({
     table: {
         borderColor: 'lightgray',
-        height: 200,
         flexDirection: 'row',
         borderWidth: 1,
-        width: windowWidth - 40,
         borderRightWidth: 0,
     },
 });

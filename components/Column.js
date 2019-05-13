@@ -12,11 +12,28 @@ export class Column extends React.Component {
         };
     }
 
+    renderItem = ({ item, index }) => {
+      return(
+        <View style = {{height: 20, width: this.props.width-12, borderWidth: 1}}>
+        </View>
+      );
+
+    };
+
     render() {
         return (
             <View style= {[styles.column, {width: this.props.width, alignItems: this.props.centered ? 'center' : null,}]}>
               <View style = {{borderBottomWidth: 1, borderColor: 'white'}}>
                 <Text style = {material.body1White}>{this.props.name}</Text>
+              </View>
+              <View style = {{marginTop: 5}}>
+                <FlatList
+                extraData={this.state.refresh}
+                showsVerticalScrollIndicator={false}
+                data={[1, 2, 3]}
+                renderItem={this.renderItem}
+                keyExtractor={(item, index) => index.toString()}
+                />
               </View>
             </View>
         );
