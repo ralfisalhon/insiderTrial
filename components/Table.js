@@ -24,39 +24,44 @@ export class Table extends React.Component {
     this.state = {
       data: [
         {
-          name: "Manchester",
-          played: 38,
-          won: 32,
-          draw: 2,
-          lost: 4
+          name: "Amazing Team",
+          played: 0,
+          won: 0,
+          draw: 0,
+          lost: 0,
+          strength: 10
         },
         {
-          name: "Liverpool",
-          played: 38,
-          won: 30,
-          draw: 7,
-          lost: 1
+          name: "Great Team",
+          played: 0,
+          won: 0,
+          draw: 0,
+          lost: 0,
+          strength: 8
         },
         {
-          name: "Chelsea",
-          played: 38,
-          won: 21,
-          draw: 9,
-          lost: 8
+          name: "Good Team",
+          played: 0,
+          won: 0,
+          draw: 0,
+          lost: 0,
+          strength: 6
         },
         {
-          name: "Tottenham",
-          played: 38,
-          won: 23,
-          draw: 2,
-          lost: 13
+          name: "Okay Team",
+          played: 0,
+          won: 0,
+          draw: 0,
+          lost: 0,
+          strength: 4
         }
       ],
       clubs: null,
       played: null,
       won: null,
       draw: null,
-      lost: null
+      lost: null,
+      strengths: null
     };
   }
 
@@ -70,10 +75,16 @@ export class Table extends React.Component {
       played: null,
       won: null,
       draw: null,
-      lost: null
+      lost: null,
+      strengths: null
     });
 
-    let clubs = [], played = [], won = [], draw = [], lost = [];
+    let clubs = [],
+      played = [],
+      won = [],
+      draw = [],
+      lost = [],
+      strengths = [];
 
     for (let i = 0; i < this.state.data.length; i++) {
       clubs.push(this.state.data[i].name);
@@ -81,23 +92,61 @@ export class Table extends React.Component {
       won.push(this.state.data[i].won);
       draw.push(this.state.data[i].draw);
       lost.push(this.state.data[i].lost);
+      strengths.push(this.state.data[i].strengths);
     }
 
-    this.setState({ clubs, played, won, draw, lost });
+    this.setState({ clubs, played, won, draw, lost, strengths });
+  }
+
+  nextWeek() {
+    let teamIndexes = this.findTeamIndexes(this.state.played);
+
+    Alert.alert(teamIndexes[0].toString(), teamIndexes[1].toString());
+  }
+
+  findTeamIndexes(playCounts) {
+    let minIndex1 = Math.floor(Math.random() * Math.floor(playCounts.length-1));
+    let min = playCounts[minIndex1];
+    for (var i = 0; i < playCounts.length; i++) {
+      if (playCounts[i] < min) {
+        minIndex1 = i;
+      }
+    }
+
+    let minIndex2 = Math.floor(Math.random() * Math.floor(playCounts.length-1));
+    while (minIndex2 == minIndex1) {
+      minIndex2 = Math.floor(Math.random() * Math.floor(playCounts.length-1));
+    }
+    let min2 = playCounts[minIndex2];
+
+    for (var i = 0; i < playCounts.length; i++) {
+      if (i != minIndex1 && playCounts[i] < min2) {
+        minIndex2 = i;
+      }
+    }
+
+    return [minIndex1, minIndex2];
+
   }
 
   render() {
     return (
       <View>
+        <View style={styles.title}>
+          <Text style={material.titleWhite}>
+            Ralfi's Ultimate Champions League Predictor
+          </Text>
+        </View>
         {this.state.clubs &&
         this.state.played &&
         this.state.won &&
         this.state.draw &&
-        this.state.lost ? (
+        this.state.lost &&
+        this.state.strengths ? (
           <View style={{ height: 20 + this.state.data.length * 20 }}>
             <View style={styles.table}>
               <Column name={"Position"} width={75} data={[1, 2, 3, 4]} />
-              <Column name={"Club"} width={100} data={this.state.clubs} />
+              <Column name={"Club"} width={125} data={this.state.clubs} />
               <Column
                 name={"P"}
                 width={30}
@@ -125,30 +174,23 @@ export class Table extends React.Component {
               <Column
                 name={"Match Results"}
                 data={this.state.results}
-                width={windowWidth - 360}
+                width={250}
               />
             </View>
 
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 10,
-                flexDirection: "row"
-              }}
-            >
+            <View style={styles.buttons}>
               <Button
                 name={"Play All"}
                 onPress={() => Alert.alert("Play All")}
               />
               <Button
                 name={"Next Week"}
-                onPress={() => Alert.alert("Next Week")}
+                onPress={() => this.nextWeek()}
               />
             </View>
           </View>
         ) : (
-          <Text style = {material.titleWhite}>Loading Data...</Text>
+          <Text style={material.titleWhite}>Loading Data...</Text>
         )}
       </View>
     );
@@ -161,5 +203,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderRightWidth: 0
+  },
+  buttons: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    flexDirection: "row"
+  },
+  title: {
+    marginBottom: 10
   }
 });
