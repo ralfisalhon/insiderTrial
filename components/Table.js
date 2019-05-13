@@ -101,11 +101,13 @@ export class Table extends React.Component {
   nextWeek() {
     let teamIndexes = this.findTeamIndexes(this.state.played);
 
-    Alert.alert(teamIndexes[0].toString(), teamIndexes[1].toString());
+    // Alert.alert(teamIndexes[0].toString(), teamIndexes[1].toString());
+
+    Alert.alert(this.state.data[teamIndexes[0]].strength.toString(), this.state.data[teamIndexes[1]].strength.toString());
   }
 
   findTeamIndexes(playCounts) {
-    let minIndex1 = Math.floor(Math.random() * Math.floor(playCounts.length-1));
+    let minIndex1 = Math.floor(Math.random() * Math.floor(playCounts.length));
     let min = playCounts[minIndex1];
     for (var i = 0; i < playCounts.length; i++) {
       if (playCounts[i] < min) {
@@ -113,9 +115,9 @@ export class Table extends React.Component {
       }
     }
 
-    let minIndex2 = Math.floor(Math.random() * Math.floor(playCounts.length-1));
+    let minIndex2 = Math.floor(Math.random() * Math.floor(playCounts.length));
     while (minIndex2 == minIndex1) {
-      minIndex2 = Math.floor(Math.random() * Math.floor(playCounts.length-1));
+      minIndex2 = Math.floor(Math.random() * Math.floor(playCounts.length));
     }
     let min2 = playCounts[minIndex2];
 
