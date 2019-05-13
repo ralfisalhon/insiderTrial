@@ -24,7 +24,17 @@ export class Table extends React.Component {
     this.state = {
       data: [
         {
-          name: "AMAZING team",
+          name: "AMAZING (25)",
+          points: 0,
+          played: 0,
+          won: 0,
+          draw: 0,
+          lost: 0,
+          goaldifference: 0,
+          strength: 25
+        },
+        {
+          name: "GREAT (20)",
           points: 0,
           played: 0,
           won: 0,
@@ -34,7 +44,7 @@ export class Table extends React.Component {
           strength: 20
         },
         {
-          name: "GREAT players",
+          name: "GOOD (15)",
           points: 0,
           played: 0,
           won: 0,
@@ -44,7 +54,7 @@ export class Table extends React.Component {
           strength: 15
         },
         {
-          name: "GOOD club",
+          name: "OKAY (10)",
           points: 0,
           played: 0,
           won: 0,
@@ -52,16 +62,6 @@ export class Table extends React.Component {
           lost: 0,
           goaldifference: 0,
           strength: 10
-        },
-        {
-          name: "OKAY kids",
-          points: 0,
-          played: 0,
-          won: 0,
-          draw: 0,
-          lost: 0,
-          goaldifference: 0,
-          strength: 5
         }
       ],
       clubs: null,
@@ -256,7 +256,7 @@ export class Table extends React.Component {
     this.setState({
       data: [
         {
-          name: "AMAZING team",
+          name: "AMAZING (25)",
           points: 0,
           played: 0,
           won: 0,
@@ -266,7 +266,7 @@ export class Table extends React.Component {
           strength: 10
         },
         {
-          name: "GREAT players",
+          name: "GREAT (20)",
           points: 0,
           played: 0,
           won: 0,
@@ -276,7 +276,7 @@ export class Table extends React.Component {
           strength: 8
         },
         {
-          name: "GOOD club",
+          name: "GOOD (15)",
           points: 0,
           played: 0,
           won: 0,
@@ -286,7 +286,7 @@ export class Table extends React.Component {
           strength: 6
         },
         {
-          name: "OKAY kids",
+          name: "OKAY (10)",
           points: 0,
           played: 0,
           won: 0,
