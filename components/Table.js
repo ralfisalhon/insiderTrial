@@ -30,6 +30,7 @@ export class Table extends React.Component {
           won: 0,
           draw: 0,
           lost: 0,
+          goaldifference: 0,
           strength: 20
         },
         {
@@ -39,6 +40,7 @@ export class Table extends React.Component {
           won: 0,
           draw: 0,
           lost: 0,
+          goaldifference: 0,
           strength: 15
         },
         {
@@ -48,6 +50,7 @@ export class Table extends React.Component {
           won: 0,
           draw: 0,
           lost: 0,
+          goaldifference: 0,
           strength: 10
         },
         {
@@ -57,6 +60,7 @@ export class Table extends React.Component {
           won: 0,
           draw: 0,
           lost: 0,
+          goaldifference: 0,
           strength: 5
         }
       ],
@@ -66,6 +70,7 @@ export class Table extends React.Component {
       won: null,
       draw: null,
       lost: null,
+      goaldifference: null,
       strengths: null,
       results: [],
       refresh: false,
@@ -77,49 +82,104 @@ export class Table extends React.Component {
     this.setIndividualArrays();
   }
 
-  setIndividualArrays() {
-    if (this.state.points) {
-      let pointsArray = this.state.points;
-      let maxIndex = Math.floor(Math.random() * Math.floor(pointsArray.length));
-      let max = pointsArray[maxIndex];
-      for (var i = 0; i < pointsArray.length; i++) {
-        if (pointsArray[i] > max) {
-          maxIndex = i;
-        }
+  reorderTeams(pointsArray, differenceArray) {
+    let oldPointsArray = [];
+    for (var i = 0; i < this.state.data.length; i++) {
+      oldPointsArray.push(pointsArray[i]);
+    }
+
+    let newArray = [];
+    let oldArray = [];
+    for (var i = 0; i < this.state.data.length; i++) {
+      oldArray.push(this.state.data[i]);
+    }
+
+    for (var z = 0; z < 4; z++) {
+      let largest = Math.max.apply(0, oldPointsArray);
+      console.log("LARGEST NUM IS", largest);
+
+      let j = 0;
+      while (oldPointsArray[j] != largest) {
+        j++;
       }
 
-      Alert.alert(maxIndex.toString());
+      newArray.push(oldArray[j]);
+      oldArray.splice(j, 1);
+      oldPointsArray.splice(j, 1);
     }
 
-    this.setState({
-      clubs: null,
-      points: null,
-      played: null,
-      won: null,
-      draw: null,
-      lost: null,
-      strengths: null
-    });
+    this.setState({data: newArray});
 
-    let clubs = [],
-      played = [],
-      points = [],
-      won = [],
-      draw = [],
-      lost = [],
-      strengths = [];
 
-    for (let i = 0; i < this.state.data.length; i++) {
-      clubs.push(this.state.data[i].name);
-      points.push(this.state.data[i].points);
-      played.push(this.state.data[i].played);
-      won.push(this.state.data[i].won);
-      draw.push(this.state.data[i].draw);
-      lost.push(this.state.data[i].lost);
-      strengths.push(this.state.data[i].strengths);
+    // let newArray = [];
+    // let oldArray = [];
+    // for (var i = 0; i < this.state.data.length; i++) {
+    //   oldArray.push(this.state.data[i]);
+    // }
+    //
+    // let largest = Math.max.apply(0, pointsArray);
+    // console.log("LARGEST NUM IS", largest);
+    //
+    // let j = 0;
+    // while (pointsArray[j] != largest && ) {
+    //   j++;
+    // }
+    //
+    // newArray.push(oldArray[j].name);
+    // oldArray.splice(j, 1);
+    //
+    // console.log(oldArray);
+
+
+  }
+
+  setIndividualArrays() {
+    if (this.state.points) {
+      let pointsArray = [], differenceArray = [];
+
+      for (var i = 0; i < this.state.data.length; i++) {
+        pointsArray.push(this.state.data[i].points);
+        differenceArray.push(this.state.data[i].goaldifference);
+      }
+
+      this.reorderTeams(pointsArray, differenceArray);
     }
 
-    this.setState({ clubs, points, played, won, draw, lost, strengths });
+    let that = this;
+    setTimeout(function() {
+      that.setState({
+        clubs: null,
+        points: null,
+        played: null,
+        won: null,
+        draw: null,
+        lost: null,
+        goaldifference: null,
+        strengths: null
+      });
+
+      let clubs = [],
+        played = [],
+        points = [],
+        won = [],
+        draw = [],
+        lost = [],
+        goaldifference = [],
+        strengths = [];
+
+      for (let i = 0; i < that.state.data.length; i++) {
+        clubs.push(that.state.data[i].name);
+        points.push(that.state.data[i].points);
+        played.push(that.state.data[i].played);
+        won.push(that.state.data[i].won);
+        draw.push(that.state.data[i].draw);
+        lost.push(that.state.data[i].lost);
+        goaldifference.push(that.state.data[i].goaldifference);
+        strengths.push(that.state.data[i].strengths);
+      }
+
+      that.setState({ clubs, points, played, won, draw, lost, goaldifference, strengths });
+    }, 50);
   }
 
   nextWeek() {
@@ -165,17 +225,21 @@ export class Table extends React.Component {
       this.state.data[teamIndexes[0]].won++;
       this.state.data[teamIndexes[1]].lost++;
       this.state.data[teamIndexes[0]].points += 3;
+
+      this.state.data[teamIndexes[0]].goaldifference += winnerScore-loserScore;
+      this.state.data[teamIndexes[1]].goaldifference += loserScore-winnerScore;
     } else {
       console.log("Second team wins", this.state.data[teamIndexes[1]].name);
       currResults.push(this.state.data[teamIndexes[1]].name + " " + winnerScore + " - " + loserScore + " " + this.state.data[teamIndexes[0]].name);
       this.state.data[teamIndexes[1]].won++;
       this.state.data[teamIndexes[0]].lost++;
       this.state.data[teamIndexes[1]].points += 3;
+
+      this.state.data[teamIndexes[1]].goaldifference += winnerScore-loserScore;
+      this.state.data[teamIndexes[0]].goaldifference += loserScore-winnerScore;
     }
 
-    this.setState({results: currResults, refresh: !this.state.refresh});
-
-    this.setIndividualArrays();
+    this.setState({results: currResults, refresh: !this.state.refresh}, () => this.setIndividualArrays());
   }
 
   playAll() {
@@ -198,6 +262,7 @@ export class Table extends React.Component {
           won: 0,
           draw: 0,
           lost: 0,
+          goaldifference: 0,
           strength: 10
         },
         {
@@ -207,6 +272,7 @@ export class Table extends React.Component {
           won: 0,
           draw: 0,
           lost: 0,
+          goaldifference: 0,
           strength: 8
         },
         {
@@ -216,6 +282,7 @@ export class Table extends React.Component {
           won: 0,
           draw: 0,
           lost: 0,
+          goaldifference: 0,
           strength: 6
         },
         {
@@ -225,6 +292,7 @@ export class Table extends React.Component {
           won: 0,
           draw: 0,
           lost: 0,
+          goaldifference: 0,
           strength: 4
         }
       ],
@@ -234,6 +302,7 @@ export class Table extends React.Component {
       won: null,
       draw: null,
       lost: null,
+      goaldifference: null,
       strengths: null,
       results: [],
       refresh: false,
@@ -275,6 +344,7 @@ export class Table extends React.Component {
         this.state.won &&
         this.state.draw &&
         this.state.lost &&
+        this.state.goaldifference &&
         this.state.strengths ? (
           <View style={{ height: 200 }}>
             <View style={styles.table}>
@@ -303,6 +373,12 @@ export class Table extends React.Component {
                 name={"L"}
                 width={30}
                 data={this.state.lost}
+                centered={true}
+              />
+              <Column
+                name={"GD"}
+                width={40}
+                data={this.state.goaldifference}
                 centered={true}
               />
               <Column
