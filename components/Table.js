@@ -103,7 +103,8 @@ export class Table extends React.Component {
 
     // Alert.alert(teamIndexes[0].toString(), teamIndexes[1].toString());
 
-    Alert.alert(this.state.data[teamIndexes[0]].strength.toString(), this.state.data[teamIndexes[1]].strength.toString());
+    console.log("INDEXES", teamIndexes[0], teamIndexes[1]);
+    console.log("STRENGTHS", this.state.data[teamIndexes[0]].strength, this.state.data[teamIndexes[1]].strength);
   }
 
   findTeamIndexes(playCounts) {
@@ -134,11 +135,6 @@ export class Table extends React.Component {
   render() {
     return (
       <View>
-        <View style={styles.title}>
-          <Text style={material.titleWhite}>
-            Ralfi's Ultimate Champions League Predictor
-          </Text>
-        </View>
         {this.state.clubs &&
         this.state.played &&
         this.state.won &&
@@ -212,7 +208,4 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row"
   },
-  title: {
-    marginBottom: 10
-  }
 });

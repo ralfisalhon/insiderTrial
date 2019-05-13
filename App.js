@@ -12,6 +12,11 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style = {styles.container}>
+              <View style={styles.title}>
+                <Text style={material.titleWhite}>
+                  Ralfi's Ultimate Champions League Predictor
+                </Text>
+              </View>
               <Table/>
             </View>
         );
@@ -25,4 +30,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
+    title: {
+      marginVertical: 10
+    }
 });
