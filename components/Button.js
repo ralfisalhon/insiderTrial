@@ -34,7 +34,7 @@ export class Button extends React.Component {
 const styles = StyleSheet.create({
   button: {
     height: 50,
-    width: 200,
+    width: 150,
     backgroundColor: "lightgray",
     borderWidth: 1,
     margin: 10,
